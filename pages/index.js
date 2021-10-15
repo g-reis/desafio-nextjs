@@ -36,13 +36,9 @@ export default function Home() {
                 maxAge: 3600, // Expires after 1hr
                 sameSite: true,
             })
-
-
-            console.log('Logado')
             router.push('/data')
         }
         else {
-            console.log('Erro de login')
             setErroLogin(true)
         }
     }

@@ -26,7 +26,6 @@ export default function Data({ users, user, tels, token }) {
     const [phoneToEdit, setPhoneToEdit] = useState();
 
     const onClickSair = async event => {
-        console.log("Sair")
         removeCookie("user")
         router.push('/')
     }
@@ -86,7 +85,6 @@ export default function Data({ users, user, tels, token }) {
 
     const addNewPhone = async event => {
         event.preventDefault()
-        console.log(event.target.phone)
         const res = await fetch(
             SERVER_BASE + '/user-data',
             {
@@ -201,7 +199,6 @@ export default function Data({ users, user, tels, token }) {
         }
     }
 
-    console.log(users)
     return (
         <>
             <Head>
@@ -489,7 +486,7 @@ export async function getServerSideProps(ctx, req) {
         return {
             redirect: {
                 permanent: false,
-                destination: "/login",
+                destination: "/",
             },
             props: {},
         };
@@ -508,7 +505,6 @@ export async function getServerSideProps(ctx, req) {
     const users = await res.json()
     const tels = await resTel.json()
     const user = JSON.parse(ctx.req.cookies.user)
-    console.log(JSON.parse(ctx.req.cookies.user).token)
     return {
         props: {
             users,
