@@ -13,7 +13,7 @@ export default function Home() {
         // where we'll add our form logic
 
         const res = await fetch(
-            'http://localhost:1337/auth/local',
+            '/auth/local',
             {
                 body: JSON.stringify({
                     identifier: event.target.username.value,

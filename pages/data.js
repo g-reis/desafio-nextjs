@@ -5,6 +5,8 @@ import { useCookies } from "react-cookie"
 import PhoneInput from 'react-phone-number-input/input'
 import 'react-phone-number-input/style.css'
 
+
+
 export default function Data({ users, user, tels, token }) {
     const router = useRouter()
 
@@ -31,7 +33,7 @@ export default function Data({ users, user, tels, token }) {
 
     async function reloadTels() {
         const resTel = await fetch(
-            'http://localhost:1337/user-data?users_permissions_user.id=' + user.userid,
+            '/user-data?users_permissions_user.id=' + user.userid,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -45,7 +47,7 @@ export default function Data({ users, user, tels, token }) {
 
     async function reloadUsers() {
         const res = await fetch(
-            'http://localhost:1337/users',
+            '/users',
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -62,7 +64,7 @@ export default function Data({ users, user, tels, token }) {
     const editPhone = async event => {
         event.preventDefault()
         const res = await fetch(
-            'http://localhost:1337/user-data/' + event.target.phoneIdHidden.value,
+            '/user-data/' + event.target.phoneIdHidden.value,
             {
                 body: JSON.stringify({
                     nome: event.target.name.value,
@@ -86,7 +88,7 @@ export default function Data({ users, user, tels, token }) {
         event.preventDefault()
         console.log(event.target.phone)
         const res = await fetch(
-            'http://localhost:1337/user-data',
+            '/user-data',
             {
                 body: JSON.stringify({
                     nome: event.target.name.value,
@@ -111,7 +113,7 @@ export default function Data({ users, user, tels, token }) {
 
     async function deletePhone(phoneID) {
         const res = await fetch(
-            'http://localhost:1337/user-data/' + phoneID,
+            '/user-data/' + phoneID,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -133,7 +135,7 @@ export default function Data({ users, user, tels, token }) {
             return
         }
         const res = await fetch(
-            'http://localhost:1337/users/' + event.target.useridHidden.value,
+            '/users/' + event.target.useridHidden.value,
             {
                 body: JSON.stringify({
                     password: event.target.password.value,
@@ -156,7 +158,7 @@ export default function Data({ users, user, tels, token }) {
             return
         }
         const res = await fetch(
-            'http://localhost:1337/users',
+            '/users',
             {
                 body: JSON.stringify({
                     username: event.target.username.value,
@@ -184,7 +186,7 @@ export default function Data({ users, user, tels, token }) {
 
     async function deleteUser(userID) {
         const res = await fetch(
-            'http://localhost:1337/users/' + userID,
+            '/users/' + userID,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -474,7 +476,7 @@ export async function getServerSideProps(ctx, req) {
     const token = JSON.parse(ctx.req.cookies.user).token
     const userid = JSON.parse(ctx.req.cookies.user).userid
     const res = await fetch(
-        'http://localhost:1337/users',
+        '/users',
         {
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -494,7 +496,7 @@ export async function getServerSideProps(ctx, req) {
     }
 
     const resTel = await fetch(
-        'http://localhost:1337/user-data?users_permissions_user.id=' + userid,
+        '/user-data?users_permissions_user.id=' + userid,
         {
             headers: {
                 'Authorization': 'Bearer ' + token
