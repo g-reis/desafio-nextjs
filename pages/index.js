@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useCookies } from "react-cookie"
 
+const SERVER_BASE = 'http://ec2-3-133-82-189.us-east-2.compute.amazonaws.com'
+
 export default function Home() {
     const router = useRouter()
     var [erroLogin, setErroLogin] = useState(false);
@@ -13,7 +15,7 @@ export default function Home() {
         // where we'll add our form logic
 
         const res = await fetch(
-            '/auth/local',
+            SERVER_BASE + '/auth/local',
             {
                 body: JSON.stringify({
                     identifier: event.target.username.value,
@@ -29,11 +31,11 @@ export default function Home() {
             const result = await res.json()
             localStorage.setItem('jwt', result.jwt)
 
-            setCookie("user", JSON.stringify({"username": result.user.username, "token": result.jwt, "userid": result.user.id}), {
+            setCookie("user", JSON.stringify({ "username": result.user.username, "token": result.jwt, "userid": result.user.id }), {
                 path: "/",
                 maxAge: 3600, // Expires after 1hr
                 sameSite: true,
-              })
+            })
 
 
             console.log('Logado')
@@ -50,13 +52,13 @@ export default function Home() {
             <Head>
                 <title>Desafio - Login</title>
             </Head>
-            
+
             <div className="flex flex-col p-4 bg-gray-50 min-h-screen">
                 <div className="flex flex-col self-center p-8 w-96 bg-green-200 rounded-lg shadow mt-20">
                     <div className="rounded-full bg-green-600 w-32 h-32 -mt-24 mb-5 self-center shadow-sm flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 self-center" fill="none" viewBox="0 0 24 24"
                             stroke="#f9fafb">
-                            <path  strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                 d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                         </svg>
                     </div>
